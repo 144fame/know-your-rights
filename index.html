@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KnowYourRights — Legal Rights Reference</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f172a;
+      --surface:   #1e293b;
+      --surface2:  #263044;
+      --border:    #334155;
+      --accent:    #10b981;
+      --accent2:   #14d8a0;
+      --accent-dim:#065f46;
+      --text:      #f1f5f9;
+      --text-muted:#94a3b8;
+      --warning:   #f59e0b;
+      --danger:    #ef4444;
+      --radius:    10px;
+      --shadow:    0 4px 24px rgba(0,0,0,0.4);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1a2744 100%);
+      border-bottom: 2px solid var(--accent-dim);
+      padding: 1.25rem 1rem 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 0.25rem;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    header h1 {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    header h1 span { color: var(--accent); }
+    header p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+    .disclaimer-banner {
+      background: #1c1010;
+      border: 1px solid #7f1d1d;
+      border-radius: 6px;
+      padding: 0.45rem 0.75rem;
+      margin-top: 0.6rem;
+      font-size: 0.75rem;
+      color: #fca5a5;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Tab bar ── */
+    .tab-bar-wrap {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .tab-bar-wrap::-webkit-scrollbar { display: none; }
+    .tab-bar {
+      display: flex;
+      min-width: max-content;
+      padding: 0 0.5rem;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.83rem;
+      font-weight: 600;
+      padding: 0.85rem 1rem;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .tab-btn .tab-icon { font-size: 1rem; }
+
+    /* ── Main content ── */
+    main { max-width: 760px; margin: 0 auto; padding: 1.25rem 1rem 5rem; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Section header ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.1rem;
+    }
+    .section-icon {
+      width: 36px; height: 36px;
+      background: var(--accent-dim);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .section-header p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── Accordion ── */
+    .accordion { display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: #475569; }
+    .card.open { border-color: var(--accent-dim); }
+
+    .card-trigger {
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      padding: 1rem 1rem 1rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text);
+    }
+    .card-trigger:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+    .card-badge {
+      background: var(--accent-dim);
+      color: var(--accent2);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .card-title {
+      font-size: 0.97rem;
+      font-weight: 700;
+      flex: 1;
+    }
+    .card-chevron {
+      color: var(--text-muted);
+      font-size: 1rem;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .card.open .card-chevron { transform: rotate(180deg); }
+
+    .card-body {
+      display: none;
+      padding: 0 1rem 1rem;
+      border-top: 1px solid var(--border);
+      animation: fadeIn 0.2s ease;
+    }
+    .card.open .card-body { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+    .card-body p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      line-height: 1.65;
+    }
+    .card-body p strong { color: var(--text); }
+    .card-body ul, .card-body ol {
+      margin-top: 0.6rem;
+      padding-left: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .card-body li { margin-bottom: 0.3rem; }
+    .card-body li strong { color: var(--text); }
+
+    .tip-box {
+      background: #0c2a1e;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 0.6rem 0.75rem;
+      margin-top: 0.85rem;
+      font-size: 0.84rem;
+      color: #a7f3d0;
+    }
+    .tip-box strong { color: var(--accent2); }
+
+    .warn-box {
+      background: #1c1204;
+      border-left: 3px solid var(--warning);
+      border-radius: 0 6px 6px 0;
+      padding: 0.6rem 0.75rem;
+      margin-top: 0.85rem;
+      font-size: 0.84rem;
+      color: #fde68a;
+    }
+    .warn-box strong { color: var(--warning); }
+
+    .script-box {
+      background: var(--surface2);
+      border-radius: 6px;
+      padding: 0.7rem 0.85rem;
+      margin-top: 0.85rem;
+      font-size: 0.85rem;
+      border: 1px dashed var(--accent-dim);
+    }
+    .script-box .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .script-box p {
+      color: #e2e8f0;
+      font-style: italic;
+      margin-top: 0;
+    }
+
+    /* ── Share button ── */
+    .share-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+    .share-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .share-btn:hover { background: var(--accent-dim); color: var(--accent2); }
+
+    /* ── Contacts tab ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    @media (min-width: 520px) {
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .contact-card .org-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent2);
+    }
+    .contact-card .org-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .contact-card a.phone-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+      background: var(--accent-dim);
+      color: var(--accent2);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.45rem 0.8rem;
+      border-radius: 6px;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .contact-card a.phone-link:hover { background: #047857; }
+    .contact-card a.web-link {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: underline;
+      margin-top: 0.1rem;
+    }
+    .contact-card a.web-link:hover { color: var(--accent2); }
+
+    /* ── Emergency banner ── */
+    .emergency-banner {
+      background: linear-gradient(135deg, #1a0505 0%, #2d0707 100%);
+      border: 2px solid var(--danger);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .emergency-banner .e-icon { font-size: 1.6rem; }
+    .emergency-banner p { font-size: 0.85rem; color: #fca5a5; line-height: 1.5; }
+    .emergency-banner p strong { color: #fff; }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.87rem;
+      font-weight: 600;
+      padding: 0.65rem 1.25rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 9999;
+      white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── Utility ── */
+    .mt { margin-top: 1.25rem; }
+    .tag {
+      display: inline-block;
+      background: #1e3a5f;
+      color: #93c5fd;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      margin-right: 0.3rem;
+      vertical-align: middle;
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.25rem 0;
+    }
+
+    /* ── Quick reference pill row ── */
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.7rem;
+    }
+    .pill {
+      background: #0f2d1f;
+      border: 1px solid var(--accent-dim);
+      color: var(--accent2);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    @media (max-width: 400px) {
+      .card-trigger { padding: 0.8rem; gap: 0.5rem; }
+      .card-title { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚖️</div>
+    <h1>Know<span>Your</span>Rights</h1>
+  </div>
+  <p>Plain-English Legal Rights Reference — Always Free</p>
+  <div class="disclaimer-banner">
+    This tool provides general legal information, not legal advice. Laws vary by state and locality. Consult a licensed attorney for your specific situation.
+  </div>
+</header>
+
+<div class="tab-bar-wrap">
+  <div class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" data-tab="police" aria-selected="true">
+      <span class="tab-icon">🚔</span> Police Encounters
+    </button>
+    <button class="tab-btn" role="tab" data-tab="arrested" aria-selected="false">
+      <span class="tab-icon">🔒</span> If Arrested
+    </button>
+    <button class="tab-btn" role="tab" data-tab="tenant" aria-selected="false">
+      <span class="tab-icon">🏠</span> Tenant Rights
+    </button>
+    <button class="tab-btn" role="tab" data-tab="worker" aria-selected="false">
+      <span class="tab-icon">👷</span> Worker Rights
+    </button>
+    <button class="tab-btn" role="tab" data-tab="contacts" aria-selected="false">
+      <span class="tab-icon">📞</span> Emergency Contacts
+    </button>
+  </div>
+</div>
+
+<main>
+
+  <!-- ══════════ POLICE ENCOUNTERS ══════════ -->
+  <div class="tab-panel active" id="panel-police" role="tabpanel">
+    <div class="section-header mt">
+      <div class="section-icon">🚔</div>
+      <div>
+        <h2>Police Encounters</h2>
+        <p>Know your rights before, during, and after any police contact.</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+
+      <div class="card" id="card-remain-silent">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">5th Amend.</span>
+          <span class="card-title">Right to Remain Silent</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Fifth Amendment</strong> of the U.S. Constitution protects you from being compelled to be a witness against yourself. You are <strong>not required to answer questions</strong> from police officers beyond basic identification requirements.</p>
+          <ul>
+            <li>You may tell an officer: "I am invoking my right to remain silent."</li>
+            <li>Remaining silent cannot be used as evidence of guilt.</li>
+            <li>You must typically provide your name in states with "stop and identify" statutes (about 24 states).</li>
+            <li>You do <strong>not</strong> have to answer questions about where you're going, where you've been, or who you were with.</li>
+            <li>Anything you say <em>can and will</em> be used against you — even seemingly innocent statements.</li>
+          </ul>
+          <div class="script-box">
+            <div class="label">What to say</div>
+            <p>"I am invoking my right to remain silent and I do not consent to any searches. Am I free to go?"</p>
+          </div>
+          <div class="tip-box"><strong>Key tip:</strong> Be calm and polite. You can assert rights firmly without being confrontational. Do not physically resist — challenge unlawful conduct in court, not on the street.</div>
+          <div class="pill-row">
+            <span class="pill">5th Amendment</span>
+            <span class="pill">Salinas v. Texas (2013)</span>
+            <span class="pill">Berghuis v. Thompkins (2010)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Right to Remain Silent" data-text="5th Amendment: You have the right to remain silent. Tell police: 'I am invoking my right to remain silent.' — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card" id="card-recording">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">1st Amend.</span>
+          <span class="card-title">Right to Record Police</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>Federal courts have consistently held that <strong>recording police officers in public is a protected First Amendment activity</strong>. Every federal circuit court to address this issue has found a constitutional right to record police performing their duties in public.</p>
+          <ul>
+            <li>You can record police on public streets, sidewalks, and in other public spaces.</li>
+            <li>You do <strong>not</strong> need to identify yourself as press or have a press pass.</li>
+            <li>Police <strong>cannot</strong> confiscate or demand you delete recordings without a warrant in most jurisdictions.</li>
+            <li>You must not physically interfere with police activity while recording.</li>
+            <li>Keep a safe distance and do not obstruct officers — record from a reasonable distance.</li>
+            <li>Some states have "two-party consent" wiretapping laws; courts have generally found public recordings of police exempt.</li>
+          </ul>
+          <div class="warn-box"><strong>Know your state:</strong> Illinois, California, and a few other states have all-party consent laws for audio recording, though courts usually exempt public police recordings. Know your local law.</div>
+          <div class="script-box">
+            <div class="label">If told to stop recording</div>
+            <p>"I am not interfering. I have a First Amendment right to record police in public."</p>
+          </div>
+          <div class="pill-row">
+            <span class="pill">1st Amendment</span>
+            <span class="pill">ACLU v. Alvarez (7th Cir.)</span>
+            <span class="pill">Glik v. Cunniffe (1st Cir.)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Right to Record Police" data-text="1st Amendment: You have the right to record police in public. Federal courts have consistently upheld this right. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card" id="card-detained">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">4th Amend.</span>
+          <span class="card-title">"Am I Being Detained?"</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>There is a critical legal difference between a <strong>consensual encounter</strong>, a <strong>detention (Terry stop)</strong>, and an <strong>arrest</strong>. You have the right to know which situation you are in.</p>
+          <ul>
+            <li><strong>Consensual encounter:</strong> Police approach and talk with you voluntarily. You are free to leave and do not have to answer questions.</li>
+            <li><strong>Detention (Terry stop):</strong> Police have "reasonable articulable suspicion" of criminal activity. They can briefly stop and ask questions. They may pat down outer clothing for weapons if they believe you're armed.</li>
+            <li><strong>Arrest:</strong> Requires probable cause. You must be told why you're being arrested.</li>
+          </ul>
+          <div class="script-box">
+            <div class="label">What to say</div>
+            <p>"Officer, am I being detained or am I free to go?"</p>
+          </div>
+          <p>If the officer says you are free to go, calmly and slowly leave. If detained, ask <em>"What is the reason for the detention?"</em> Then invoke your right to remain silent and ask for an attorney.</p>
+          <div class="tip-box"><strong>Important:</strong> Do not run or physically resist even an unlawful detention. Comply physically, but verbally assert your rights and challenge the detention later in court.</div>
+          <div class="pill-row">
+            <span class="pill">4th Amendment</span>
+            <span class="pill">Terry v. Ohio (1968)</span>
+            <span class="pill">Florida v. Bostick (1991)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Am I Being Detained?" data-text="Ask police: 'Am I being detained or am I free to go?' You have the right to know if you're free to leave. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card" id="card-searches">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">4th Amend.</span>
+          <span class="card-title">Search &amp; Seizure Rights</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Fourth Amendment</strong> protects you against unreasonable searches and seizures. Police generally need a <strong>warrant</strong>, <strong>probable cause</strong>, or your <strong>consent</strong> to search.</p>
+          <ul>
+            <li><strong>Your home:</strong> Police need a warrant to enter. You can refuse entry if they don't have one (unless there's an emergency/exigent circumstances).</li>
+            <li><strong>Your car:</strong> Police can search if they have probable cause. They do not need your consent — but your refusal is on record. Do not physically resist.</li>
+            <li><strong>Your person:</strong> A pat-down (frisk) requires reasonable suspicion you're armed. A full search requires probable cause or arrest.</li>
+            <li><strong>Consent searches:</strong> You have the right to refuse consent to search your bag, car, or home. Refusing consent is not evidence of guilt.</li>
+            <li><strong>Exceptions:</strong> Plain view, exigent circumstances, search incident to arrest, and inventory searches allow warrantless searches.</li>
+          </ul>
+          <div class="script-box">
+            <div class="label">To refuse consent</div>
+            <p>"I do not consent to a search."</p>
+          </div>
+          <div class="warn-box"><strong>Even if you refuse:</strong> Police may search anyway if they believe they have probable cause or another exception applies. Do not physically resist — challenge the search in court later.</div>
+          <div class="pill-row">
+            <span class="pill">4th Amendment</span>
+            <span class="pill">Katz v. United States (1967)</span>
+            <span class="pill">Schneckloth v. Bustamonte (1973)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Search & Seizure Rights" data-text="4th Amendment: You can refuse consent to searches. Say: 'I do not consent to a search.' — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card" id="card-traffic">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Practical</span>
+          <span class="card-title">Traffic Stops</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>Traffic stops are one of the most common police encounters. Knowing how to handle them safely protects your rights.</p>
+          <ul>
+            <li>Pull over as soon as it is safe to do so. Turn on your hazard lights.</li>
+            <li>Turn off the engine. Keep hands visible on the steering wheel.</li>
+            <li>You are required to provide your driver's license, vehicle registration, and proof of insurance.</li>
+            <li>You do <strong>not</strong> have to answer questions beyond identification.</li>
+            <li>You do <strong>not</strong> have to consent to a search of your vehicle — but police may search with probable cause regardless.</li>
+            <li>Passengers generally must provide ID only in "stop and identify" states. Check your state's law.</li>
+            <li>If you feel the stop was unlawful, note the officer's name/badge number and contest it in court.</li>
+          </ul>
+          <div class="tip-box"><strong>Document everything:</strong> After the stop, write down or record what happened as soon as possible — officer names, badge numbers, patrol car numbers, what was said, and any witnesses.</div>
+          <div class="share-row"><button class="share-btn" data-title="Traffic Stop Rights" data-text="During traffic stops: provide license/registration/insurance, keep hands visible, you can refuse consent to search. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card" id="card-force">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Civil Rights</span>
+          <span class="card-title">Excessive Force &amp; Complaints</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Fourth Amendment</strong> prohibits the use of unreasonable or excessive force by law enforcement officers. The standard is whether force was "objectively reasonable" under the circumstances.</p>
+          <ul>
+            <li>If you believe force used against you was excessive, <strong>do not resist in the moment</strong> — comply and document everything afterward.</li>
+            <li>Seek medical attention immediately and photograph all injuries.</li>
+            <li>File a complaint with the police department's internal affairs division.</li>
+            <li>File a complaint with your city or county's civilian oversight board (if one exists).</li>
+            <li>Contact the ACLU or a civil rights attorney — you may have a Section 1983 civil rights claim.</li>
+            <li>Contact the FBI's civil rights division if you believe your federal civil rights were violated.</li>
+          </ul>
+          <div class="warn-box"><strong>Time limits apply:</strong> Statutes of limitations on civil rights claims are typically 2–3 years. Act quickly. Some jurisdictions require filing a tort claim within 6 months.</div>
+          <div class="pill-row">
+            <span class="pill">4th Amendment</span>
+            <span class="pill">42 U.S.C. § 1983</span>
+            <span class="pill">Graham v. Connor (1989)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Excessive Force Rights" data-text="If police use excessive force: document everything, seek medical care, and contact the ACLU or civil rights attorney. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+    </div><!-- /accordion -->
+  </div><!-- /panel-police -->
+
+
+  <!-- ══════════ IF ARRESTED ══════════ -->
+  <div class="tab-panel" id="panel-arrested" role="tabpanel">
+    <div class="section-header mt">
+      <div class="section-icon">🔒</div>
+      <div>
+        <h2>If You Are Arrested</h2>
+        <p>What to do and what to say from the moment of arrest.</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Miranda</span>
+          <span class="card-title">Miranda Rights Explained</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>Before police can interrogate someone in custody, they must read the <strong>Miranda warning</strong>, established in Miranda v. Arizona (1966). The warning includes:</p>
+          <ul>
+            <li>"You have the right to remain silent."</li>
+            <li>"Anything you say can and will be used against you in a court of law."</li>
+            <li>"You have the right to an attorney."</li>
+            <li>"If you cannot afford an attorney, one will be appointed for you."</li>
+          </ul>
+          <p><strong>Key points:</strong></p>
+          <ul>
+            <li>Miranda applies when you are both <em>in custody</em> AND being <em>interrogated</em>.</li>
+            <li>If police do not read Miranda before a custodial interrogation, any statements you make may be suppressed.</li>
+            <li>You must <em>actively invoke</em> your rights — say clearly: "I invoke my right to remain silent" and "I want an attorney."</li>
+            <li>Remaining silent alone may not protect you — you must verbally invoke the right (Berghuis v. Thompkins).</li>
+            <li>Once you invoke your right to counsel, police must stop all questioning.</li>
+          </ul>
+          <div class="script-box">
+            <div class="label">Exactly what to say</div>
+            <p>"I am invoking my right to remain silent. I want an attorney. I will not answer questions without my attorney present."</p>
+          </div>
+          <div class="tip-box"><strong>Then stop talking.</strong> Do not explain yourself. Do not try to "clear things up." Wait for your attorney.</div>
+          <div class="share-row"><button class="share-btn" data-title="Miranda Rights" data-text="If arrested, say: 'I invoke my right to remain silent. I want an attorney.' Then stop talking. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">6th Amend.</span>
+          <span class="card-title">Right to an Attorney</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Sixth Amendment</strong> guarantees your right to legal counsel in all criminal prosecutions where imprisonment is possible.</p>
+          <ul>
+            <li>You have the right to an attorney from the moment of arrest.</li>
+            <li>If you cannot afford one, a public defender will be appointed at no cost to you.</li>
+            <li>You may also hire your own private criminal defense attorney.</li>
+            <li>Your attorney has the right to be present during all interrogations once you request one.</li>
+            <li>Attorney-client communications are privileged and confidential (except calls from jail, which are often recorded — use caution).</li>
+            <li>You can request to call an attorney. Police must allow you a reasonable opportunity to contact one.</li>
+          </ul>
+          <div class="warn-box"><strong>Jail phone calls are recorded.</strong> Do not discuss the facts of your case on a jail phone line. Only discuss case details in person with your attorney during privileged visits.</div>
+          <div class="pill-row">
+            <span class="pill">6th Amendment</span>
+            <span class="pill">Gideon v. Wainwright (1963)</span>
+            <span class="pill">Massiah v. United States (1964)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Right to Attorney" data-text="6th Amendment: You have the right to an attorney from the moment of arrest. Public defenders are free if you can't afford one. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Process</span>
+          <span class="card-title">The Booking Process</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>After arrest, you will go through a <strong>booking process</strong> at the police station or jail. Understanding each step helps you stay calm and protect your rights.</p>
+          <ol>
+            <li><strong>Fingerprinting &amp; photographs</strong> — These are required; you cannot refuse.</li>
+            <li><strong>Personal property inventory</strong> — Your belongings are logged and stored.</li>
+            <li><strong>Health screening</strong> — Typically involves a basic medical/mental health questionnaire.</li>
+            <li><strong>Background check</strong> — Officers will check for outstanding warrants.</li>
+            <li><strong>Cell assignment</strong> — You will be placed in a holding cell or jail cell.</li>
+            <li><strong>Phone call</strong> — You generally have the right to a phone call. Use it to contact an attorney or a trusted person who can help you.</li>
+          </ol>
+          <div class="tip-box"><strong>What NOT to do during booking:</strong> Do not answer questions about the alleged offense. You can answer biographical questions (name, address) but say "I want my attorney" for anything else.</div>
+          <div class="share-row"><button class="share-btn" data-title="Booking Process" data-text="During arrest booking: fingerprints are required, you get a phone call — use it to call an attorney. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Bail</span>
+          <span class="card-title">Bail &amp; Pretrial Release</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p><strong>Bail</strong> is a set amount of money that allows you to be released from jail while your case proceeds. It is a financial guarantee that you will appear in court.</p>
+          <ul>
+            <li><strong>Arraignment:</strong> Bail is typically set at your first court appearance (arraignment), usually within 48–72 hours of arrest.</li>
+            <li><strong>Own recognizance (OR):</strong> In some cases, a judge will release you on your promise to appear, without requiring cash bail.</li>
+            <li><strong>Bail bondsman:</strong> If you can't pay the full bail amount, a bail bondsman will post bail for a fee (typically 10–15% of bail, non-refundable).</li>
+            <li><strong>Bail review:</strong> You or your attorney can ask for a bail reduction hearing, especially if bail is set unreasonably high.</li>
+            <li><strong>8th Amendment:</strong> Bail cannot be "excessive" relative to the offense and flight risk.</li>
+          </ul>
+          <div class="warn-box"><strong>Violating bail conditions</strong> (missing court, traveling out of jurisdiction) will result in bail forfeiture and a warrant for your arrest. Always appear for every court date.</div>
+          <div class="pill-row">
+            <span class="pill">8th Amendment</span>
+            <span class="pill">Stack v. Boyle (1951)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Bail Rights" data-text="8th Amendment: Bail cannot be excessive. You can request a bail reduction hearing. Always appear for court dates. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Process</span>
+          <span class="card-title">Arraignment &amp; Charges</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>arraignment</strong> is your first formal court appearance where you are formally charged and enter a plea. This is a critical step.</p>
+          <ul>
+            <li>You will be told the official charges against you.</li>
+            <li>You enter a plea: <em>Guilty</em>, <em>Not Guilty</em>, or <em>No Contest (Nolo Contendere)</em>.</li>
+            <li><strong>Almost always plead Not Guilty at arraignment</strong> — even if you did it. This preserves your options. You can always change your plea later after consulting with an attorney.</li>
+            <li>If you do not have an attorney yet, ask the court to appoint one before you enter a plea.</li>
+            <li>The judge will set, modify, or continue your bail.</li>
+          </ul>
+          <div class="tip-box"><strong>Never plead guilty at arraignment</strong> without first consulting an attorney. A not guilty plea preserves all your options and gives time to build a defense or negotiate.</div>
+          <div class="share-row"><button class="share-btn" data-title="Arraignment Rights" data-text="At arraignment, almost always plead Not Guilty first — you can change it later. This preserves all your options. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-arrested -->
+
+
+  <!-- ══════════ TENANT RIGHTS ══════════ -->
+  <div class="tab-panel" id="panel-tenant" role="tabpanel">
+    <div class="section-header mt">
+      <div class="section-icon">🏠</div>
+      <div>
+        <h2>Tenant Rights</h2>
+        <p>Know your rights as a renter — housing is a human right.</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Habitability</span>
+          <span class="card-title">Implied Warranty of Habitability</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>Every residential lease includes an <strong>implied warranty of habitability</strong> — your landlord must maintain the rental unit in a livable condition throughout your tenancy, regardless of what the lease says.</p>
+          <ul>
+            <li>Working heat, plumbing, hot water, and electricity.</li>
+            <li>Structural soundness — roof, walls, floors, and ceilings.</li>
+            <li>Freedom from pest infestations (rodents, cockroaches, bedbugs).</li>
+            <li>Working locks and security devices.</li>
+            <li>Safe common areas.</li>
+            <li>Freedom from toxic hazards (lead paint, asbestos, mold).</li>
+          </ul>
+          <p>If your landlord fails to maintain habitability after notice:</p>
+          <ul>
+            <li><strong>Repair and deduct:</strong> Some states allow you to have repairs made and deduct the cost from rent.</li>
+            <li><strong>Rent withholding/escrow:</strong> Some states allow withholding rent until repairs are made.</li>
+            <li><strong>Lease termination:</strong> Severe habitability failures may let you break the lease without penalty.</li>
+            <li>Contact local housing authorities, building inspectors, or tenant advocacy organizations.</li>
+          </ul>
+          <div class="warn-box"><strong>Always provide written notice</strong> of repair requests to your landlord via certified mail or email. Document the date, the problem, and keep copies of all correspondence.</div>
+          <div class="share-row"><button class="share-btn" data-title="Habitability Rights" data-text="Landlords must maintain habitable conditions: heat, plumbing, structural safety, no pests. Give written notice of repair requests. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Eviction</span>
+          <span class="card-title">Eviction Rules &amp; Protections</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>A landlord <strong>cannot evict you without following the legal process</strong>. Self-help evictions (changing locks, removing belongings, shutting off utilities) are illegal in all U.S. states.</p>
+          <ul>
+            <li><strong>Notice:</strong> Landlord must provide written notice — typically 3–30 days depending on the reason and state.</li>
+            <li><strong>Types of notices:</strong> Pay or Quit (unpaid rent), Cure or Quit (lease violation), or Unconditional Quit.</li>
+            <li><strong>Court filing:</strong> If you don't comply, the landlord must file in court (unlawful detainer / eviction lawsuit).</li>
+            <li><strong>Court hearing:</strong> You have the right to appear in court and present a defense.</li>
+            <li><strong>Writ of possession:</strong> Only after a court judgment can a sheriff remove you — not the landlord directly.</li>
+            <li>Retaliatory eviction (evicting you for complaining about repairs or reporting violations) is illegal in most states.</li>
+            <li>Eviction for discriminatory reasons violates the Fair Housing Act.</li>
+          </ul>
+          <div class="tip-box"><strong>If you receive an eviction notice:</strong> Immediately contact a local tenant legal aid organization. Many offer free consultations. Even if you're behind on rent, you may have defenses.</div>
+          <div class="share-row"><button class="share-btn" data-title="Eviction Rights" data-text="Landlords cannot evict without court process. Changing locks or shutting off utilities is an illegal self-help eviction. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Security</span>
+          <span class="card-title">Security Deposits</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>Security deposit laws vary significantly by state, but most share common protections for tenants.</p>
+          <ul>
+            <li><strong>Maximum amount:</strong> Most states cap deposits at 1–2 months' rent.</li>
+            <li><strong>Return timeline:</strong> Typically 14–30 days after move-out (varies by state).</li>
+            <li><strong>Normal wear and tear:</strong> Landlords <strong>cannot</strong> deduct for normal wear — carpet fading, small scuffs on walls, minor paint wear. They can deduct for damage beyond normal use.</li>
+            <li><strong>Itemized statement:</strong> If any amount is withheld, landlord must provide a written, itemized list of deductions.</li>
+            <li><strong>Interest:</strong> Some states require landlords to keep deposits in separate escrow accounts and pay interest.</li>
+            <li>If the landlord fails to return the deposit or itemized statement on time, you may be entitled to double or triple damages in many states.</li>
+          </ul>
+          <div class="tip-box"><strong>Move-out checklist:</strong> Take date-stamped photos and video of every room before and after moving out. Send your forwarding address in writing. Keep copies of all move-in/move-out inspection reports.</div>
+          <div class="share-row"><button class="share-btn" data-title="Security Deposit Rights" data-text="Landlords can't deduct for normal wear and tear. Deposits must be returned within 14–30 days. Document everything with photos. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Privacy</span>
+          <span class="card-title">Landlord Entry Rules</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>You have a right to <strong>quiet enjoyment</strong> of your home. Landlords generally cannot enter without proper notice, even though they own the property.</p>
+          <ul>
+            <li><strong>Notice requirement:</strong> In most states, landlords must give 24–48 hours advance written notice before entering.</li>
+            <li><strong>Permitted reasons:</strong> Repairs, inspections, showing to prospective tenants/buyers, or emergencies.</li>
+            <li><strong>Reasonable hours:</strong> Entry must be at reasonable hours (typically 8am–6pm on weekdays).</li>
+            <li><strong>Emergency entry:</strong> A landlord may enter without notice in a genuine emergency (fire, flood, gas leak).</li>
+            <li><strong>Harassment:</strong> Repeated unauthorized entry, excessive inspections, or entry to intimidate you may be "landlord harassment" — a civil claim in many states.</li>
+          </ul>
+          <div class="warn-box"><strong>If your landlord enters without notice:</strong> Document it in writing (date, time, what was accessed). If it continues, send a formal letter citing your state's statute and your right to quiet enjoyment.</div>
+          <div class="share-row"><button class="share-btn" data-title="Landlord Entry Rights" data-text="Landlords must give 24–48 hours notice before entering your home. You have a right to quiet enjoyment. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Fair Housing</span>
+          <span class="card-title">Fair Housing Act &amp; Discrimination</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Fair Housing Act (FHA)</strong> prohibits housing discrimination based on several protected characteristics at every stage of renting or buying.</p>
+          <ul>
+            <li><strong>Federal protected classes:</strong> Race, color, national origin, religion, sex, familial status, disability.</li>
+            <li>Many states and cities add additional protections: sexual orientation, gender identity, source of income, age, marital status.</li>
+            <li>Discrimination can include: refusing to rent, setting different terms, steering toward certain neighborhoods, refusing reasonable accommodations for disabilities, or harassment.</li>
+            <li>Landlords must provide reasonable accommodations for tenants with disabilities (e.g., allowing a service animal even with a "no pets" policy).</li>
+          </ul>
+          <div class="tip-box"><strong>File a complaint:</strong> HUD accepts Fair Housing complaints at 1-800-669-9777 or online at hud.gov. You typically have one year from the discriminatory act to file. Filing is free.</div>
+          <div class="pill-row">
+            <span class="pill">Fair Housing Act</span>
+            <span class="pill">42 U.S.C. § 3601</span>
+            <span class="pill">ADA Title III</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Fair Housing Rights" data-text="Fair Housing Act prohibits discrimination based on race, color, sex, disability, and more. File complaints with HUD at 1-800-669-9777. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-tenant -->
+
+
+  <!-- ══════════ WORKER RIGHTS ══════════ -->
+  <div class="tab-panel" id="panel-worker" role="tabpanel">
+    <div class="section-header mt">
+      <div class="section-icon">👷</div>
+      <div>
+        <h2>Worker Rights</h2>
+        <p>Federal laws that protect every worker in the United States.</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">FLSA</span>
+          <span class="card-title">Minimum Wage &amp; Overtime (FLSA)</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Fair Labor Standards Act (FLSA)</strong> sets federal minimums for wages, overtime, and child labor. Many states and cities have higher minimums that override the federal floor.</p>
+          <ul>
+            <li><strong>Federal minimum wage:</strong> $7.25/hour (many states are higher — check your state).</li>
+            <li><strong>Overtime:</strong> Non-exempt employees must be paid <em>1.5× their regular rate</em> for all hours over 40 per workweek.</li>
+            <li><strong>Tipped workers:</strong> Federal tipped minimum is $2.13/hour but employer must ensure total earnings reach at least $7.25/hour.</li>
+            <li><strong>Exempt employees:</strong> Salaried professionals, executives, and administrative employees may be exempt from overtime (salary threshold: $684/week as of recent rules).</li>
+            <li>Your employer <strong>cannot retaliate</strong> against you for asserting FLSA rights.</li>
+            <li>File wage theft complaints with the Department of Labor Wage and Hour Division (1-866-487-9243).</li>
+          </ul>
+          <div class="warn-box"><strong>Tip theft and wage theft</strong> are illegal. If your employer is not paying proper wages, you can recover back pay plus an equal amount in liquidated damages, plus attorney fees.</div>
+          <div class="pill-row">
+            <span class="pill">FLSA</span>
+            <span class="pill">29 U.S.C. § 201</span>
+            <span class="pill">DOL Wage &amp; Hour Division</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="FLSA Wage Rights" data-text="FLSA: You must be paid 1.5x your rate for overtime (40+ hrs/week). Report wage theft to DOL: 1-866-487-9243. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">OSHA</span>
+          <span class="card-title">Workplace Safety (OSHA)</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Occupational Safety and Health Act (OSHA)</strong> gives workers the right to a safe workplace free from recognized hazards that cause or are likely to cause death or serious physical harm.</p>
+          <ul>
+            <li>You have the right to receive training in a language you understand.</li>
+            <li>You have the right to review workplace injury and illness records.</li>
+            <li>You have the right to request an OSHA inspection of your workplace.</li>
+            <li>You can file a confidential safety complaint with OSHA — your employer cannot retaliate.</li>
+            <li>You have the right to <strong>refuse work you reasonably believe presents imminent danger</strong> of death or serious injury.</li>
+            <li>OSHA anti-retaliation protections: your employer cannot fire, demote, cut pay, or harass you for exercising your OSHA rights.</li>
+          </ul>
+          <div class="tip-box"><strong>File OSHA complaints:</strong> Call 1-800-321-OSHA (6742) or file online at osha.gov. Complaints can be anonymous. You can also request an inspection without your employer knowing who filed.</div>
+          <div class="pill-row">
+            <span class="pill">OSH Act 1970</span>
+            <span class="pill">Section 11(c)</span>
+            <span class="pill">29 CFR 1977</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="OSHA Workplace Safety" data-text="OSHA: You have the right to a safe workplace. Report safety issues to OSHA at 1-800-321-6742. Retaliation is illegal. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">Title VII</span>
+          <span class="card-title">Workplace Discrimination (Title VII)</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p><strong>Title VII of the Civil Rights Act of 1964</strong> prohibits employment discrimination based on protected characteristics. It covers employers with 15 or more employees.</p>
+          <ul>
+            <li><strong>Protected classes:</strong> Race, color, religion, sex (including sexual orientation and gender identity per Bostock v. Clayton County), and national origin.</li>
+            <li>Additional federal laws cover: age (ADEA — 40+), disability (ADA), pregnancy (PDA), and genetic information (GINA).</li>
+            <li>Covers: hiring, firing, promotions, pay, job assignments, training, and any other term or condition of employment.</li>
+            <li><strong>Sexual harassment</strong> is a form of sex discrimination under Title VII — both quid pro quo and hostile work environment harassment.</li>
+            <li><strong>Retaliation</strong> for complaining about discrimination is also illegal.</li>
+            <li>To sue, you must first file a charge with the EEOC within 180–300 days of the discriminatory act.</li>
+          </ul>
+          <div class="tip-box"><strong>File with EEOC:</strong> 1-800-669-4000 or eeoc.gov. Filing is free. You do not need an attorney to file an EEOC charge, though legal help is beneficial.</div>
+          <div class="pill-row">
+            <span class="pill">Title VII</span>
+            <span class="pill">42 U.S.C. § 2000e</span>
+            <span class="pill">Bostock v. Clayton County (2020)</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Workplace Discrimination Rights" data-text="Title VII prohibits workplace discrimination based on race, sex, religion, and more. File with EEOC at 1-800-669-4000. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">NLRA</span>
+          <span class="card-title">Organizing &amp; Union Rights (NLRA)</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>National Labor Relations Act (NLRA)</strong> protects workers' rights to organize, form unions, bargain collectively, and engage in "concerted activity" for mutual aid or protection.</p>
+          <ul>
+            <li>You have the right to discuss wages, hours, and working conditions with coworkers.</li>
+            <li>You have the right to organize a union or join an existing one.</li>
+            <li>You have the right to engage in collective bargaining through a union representative.</li>
+            <li>You have the right to strike (with some limitations for certain industries).</li>
+            <li><strong>Weingarten rights:</strong> Union employees have the right to request a union representative be present during investigatory interviews that may result in discipline.</li>
+            <li>Employer unfair labor practices (interfering with organizing, retaliating against organizers) can be reported to the NLRB.</li>
+          </ul>
+          <div class="warn-box"><strong>Note:</strong> NLRA covers most private-sector workers but does NOT cover federal, state, or local government employees (they are covered by separate laws), or agricultural workers.</div>
+          <div class="tip-box"><strong>File NLRB charges:</strong> Call the NLRB at 1-844-762-6572 or visit nlrb.gov. You have 6 months from the unfair labor practice to file a charge.</div>
+          <div class="pill-row">
+            <span class="pill">NLRA</span>
+            <span class="pill">29 U.S.C. § 151</span>
+            <span class="pill">NLRB Section 7</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="Organizing Rights" data-text="NLRA: You have the right to discuss wages with coworkers and organize a union. Employer retaliation is illegal. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <button class="card-trigger" aria-expanded="false">
+          <span class="card-badge">FMLA</span>
+          <span class="card-title">Family &amp; Medical Leave (FMLA)</span>
+          <span class="card-chevron">▾</span>
+        </button>
+        <div class="card-body">
+          <p>The <strong>Family and Medical Leave Act (FMLA)</strong> entitles eligible workers to take unpaid, job-protected leave for specified family and medical reasons.</p>
+          <ul>
+            <li><strong>Who is covered:</strong> Employees who have worked for a covered employer (50+ employees) for at least 12 months and 1,250 hours in the past year.</li>
+            <li><strong>How much leave:</strong> Up to 12 weeks per year for qualifying reasons; 26 weeks for military family leave.</li>
+            <li><strong>Qualifying reasons:</strong> Birth/adoption of a child, serious personal health condition, caring for a spouse/child/parent with a serious health condition, qualifying military exigencies.</li>
+            <li><strong>Job protection:</strong> You must be restored to the same or equivalent position when you return.</li>
+            <li><strong>Health benefits:</strong> Your employer must maintain your health insurance during FMLA leave.</li>
+            <li>Your employer cannot retaliate against you for taking FMLA leave.</li>
+          </ul>
+          <div class="tip-box"><strong>Notify your employer</strong> as soon as possible of your need for FMLA leave. Provide sufficient information — you don't have to specifically mention "FMLA" but must describe the qualifying reason.</div>
+          <div class="pill-row">
+            <span class="pill">FMLA</span>
+            <span class="pill">29 U.S.C. § 2601</span>
+            <span class="pill">DOL WHD</span>
+          </div>
+          <div class="share-row"><button class="share-btn" data-title="FMLA Leave Rights" data-text="FMLA: Eligible workers get up to 12 weeks unpaid, job-protected leave for medical/family reasons. — KnowYourRights">📤 Share</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /panel-worker -->
+
+
+  <!-- ══════════ EMERGENCY CONTACTS ══════════ -->
+  <div class="tab-panel" id="panel-contacts" role="tabpanel">
+    <div class="section-header mt">
+      <div class="section-icon">📞</div>
+      <div>
+        <h2>Emergency Legal Contacts</h2>
+        <p>Free and low-cost legal resources — tap to call.</p>
+      </div>
+    </div>
+
+    <div class="emergency-banner">
+      <div class="e-icon">🚨</div>
+      <p>If you are in immediate danger or a crime is in progress, call <strong>911</strong> immediately. The contacts below are for legal assistance, advocacy, and reporting civil rights violations.</p>
+    </div>
+
+    <h3 style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Civil Rights Organizations</h3>
+    <div class="contact-grid">
+
+      <div class="contact-card">
+        <div class="org-name">ACLU — National</div>
+        <div class="org-desc">American Civil Liberties Union. Handles civil rights violations, police misconduct, discrimination, and free speech issues.</div>
+        <a class="phone-link" href="tel:+12125490870">📞 (212) 549-0870</a>
+        <a class="web-link" href="https://www.aclu.org" target="_blank" rel="noopener">aclu.org →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">NAACP Legal Defense Fund</div>
+        <div class="org-desc">Racial justice legal advocacy, criminal justice reform, voting rights, and educational equity litigation.</div>
+        <a class="phone-link" href="tel:+12127132180">📞 (212) 965-2200</a>
+        <a class="web-link" href="https://www.naacpldf.org" target="_blank" rel="noopener">naacpldf.org →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">Legal Aid Society</div>
+        <div class="org-desc">Free civil legal services for low-income individuals. Covers family, housing, immigration, and criminal defense.</div>
+        <a class="phone-link" href="tel:+12128766590">📞 (212) 876-6590</a>
+        <a class="web-link" href="https://www.legalaid.org" target="_blank" rel="noopener">legalaid.org →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">National Legal Aid &amp; Defender Association</div>
+        <div class="org-desc">Find local legal aid offices providing free civil legal help to low-income Americans nationwide.</div>
+        <a class="phone-link" href="tel:+12026289161">📞 (202) 628-9161</a>
+        <a class="web-link" href="https://www.nlada.org" target="_blank" rel="noopener">nlada.org →</a>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Government Agencies</h3>
+    <div class="contact-grid">
+
+      <div class="contact-card">
+        <div class="org-name">U.S. Dept. of Labor (DOL)</div>
+        <div class="org-desc">Wage theft, overtime violations, FMLA, child labor, and other federal labor law complaints.</div>
+        <a class="phone-link" href="tel:+18664879243">📞 1-866-487-9243</a>
+        <a class="web-link" href="https://www.dol.gov" target="_blank" rel="noopener">dol.gov →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">EEOC — National</div>
+        <div class="org-desc">Equal Employment Opportunity Commission. File workplace discrimination charges based on race, sex, disability, age, and more.</div>
+        <a class="phone-link" href="tel:+18006694000">📞 1-800-669-4000</a>
+        <a class="web-link" href="https://www.eeoc.gov" target="_blank" rel="noopener">eeoc.gov →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">OSHA — Worker Safety</div>
+        <div class="org-desc">Report workplace safety hazards and violations. File confidential safety complaints. Anti-retaliation assistance.</div>
+        <a class="phone-link" href="tel:+18003216742">📞 1-800-321-6742</a>
+        <a class="web-link" href="https://www.osha.gov" target="_blank" rel="noopener">osha.gov →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">HUD Fair Housing</div>
+        <div class="org-desc">Report housing discrimination based on race, color, religion, sex, disability, familial status, or national origin.</div>
+        <a class="phone-link" href="tel:+18006699777">📞 1-800-669-9777</a>
+        <a class="web-link" href="https://www.hud.gov/fairhousing" target="_blank" rel="noopener">hud.gov/fairhousing →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">NLRB — Labor Relations</div>
+        <div class="org-desc">National Labor Relations Board. File charges for unfair labor practices, union organizing interference.</div>
+        <a class="phone-link" href="tel:+18447626572">📞 1-844-762-6572</a>
+        <a class="web-link" href="https://www.nlrb.gov" target="_blank" rel="noopener">nlrb.gov →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">FBI Civil Rights Division</div>
+        <div class="org-desc">Report federal civil rights violations including police misconduct, hate crimes, and human trafficking.</div>
+        <a class="phone-link" href="tel:+18009616647">📞 1-800-961-6647</a>
+        <a class="web-link" href="https://www.fbi.gov/investigate/civil-rights" target="_blank" rel="noopener">fbi.gov/civil-rights →</a>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Crisis &amp; Immediate Help</h3>
+    <div class="contact-grid">
+
+      <div class="contact-card">
+        <div class="org-name">211 — Community Resources</div>
+        <div class="org-desc">Free information and referrals to local health and human services including housing, food, and legal aid.</div>
+        <a class="phone-link" href="tel:211">📞 Dial 211</a>
+        <a class="web-link" href="https://www.211.org" target="_blank" rel="noopener">211.org →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">National Domestic Violence Hotline</div>
+        <div class="org-desc">24/7 confidential support for those affected by domestic violence, including safety planning and legal resources.</div>
+        <a class="phone-link" href="tel:+18007997233">📞 1-800-799-7233</a>
+        <a class="web-link" href="https://www.thehotline.org" target="_blank" rel="noopener">thehotline.org →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">Immigrant Legal Resource Center</div>
+        <div class="org-desc">Resources for immigrants navigating the legal system, including rights during immigration enforcement encounters.</div>
+        <a class="phone-link" href="tel:+14152554288">📞 (415) 255-4288</a>
+        <a class="web-link" href="https://www.ilrc.org" target="_blank" rel="noopener">ilrc.org →</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="org-name">National Center for Victims of Crime</div>
+        <div class="org-desc">Information, referrals, and legal resources for crime victims across the U.S.</div>
+        <a class="phone-link" href="tel:+12024676523">📞 (202) 467-6523</a>
+        <a class="web-link" href="https://www.victimsofcrime.org" target="_blank" rel="noopener">victimsofcrime.org →</a>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;padding:0.5rem 0 1rem;">
+      Most civil rights organizations offer free initial consultations. You can also search <a href="https://www.lawhelp.org" target="_blank" rel="noopener" style="color:var(--accent2);">lawhelp.org</a> or <a href="https://www.probono.net" target="_blank" rel="noopener" style="color:var(--accent2);">probono.net</a> for free legal aid in your state.
+    </p>
+
+  </div><!-- /panel-contacts -->
+
+</main>
+
+<div id="toast">✓ Copied to clipboard</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Tab switching ──────────────────────────────────────────────
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      tabPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      const panel = document.getElementById('panel-' + target);
+      if (panel) {
+        panel.classList.add('active');
+        // scroll tab into view on mobile
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+  });
+
+  // ── Accordion ─────────────────────────────────────────────────
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    const trigger = card.querySelector('.card-trigger');
+    const body    = card.querySelector('.card-body');
+    if (!trigger || !body) return;
+    trigger.addEventListener('click', () => {
+      const isOpen = card.classList.contains('open');
+      // close all in same tab panel
+      const panel = card.closest('.tab-panel');
+      if (panel) {
+        panel.querySelectorAll('.card.open').forEach(c => {
+          c.classList.remove('open');
+          c.querySelector('.card-trigger').setAttribute('aria-expanded', 'false');
+        });
+      }
+      if (!isOpen) {
+        card.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ── Toast helper ──────────────────────────────────────────────
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg || '✓ Copied to clipboard';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  // ── Share buttons ─────────────────────────────────────────────
+  document.querySelectorAll('.share-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const title = btn.dataset.title || 'KnowYourRights';
+      const text  = btn.dataset.text  || 'Know your legal rights. — KnowYourRights';
+      const url   = window.location.href;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, text, url });
+          return;
+        } catch (_) { /* fallthrough to clipboard */ }
+      }
+      try {
+        await navigator.clipboard.writeText(text + '\n' + url);
+        showToast('✓ Copied to clipboard');
+      } catch (_) {
+        // fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text + '\n' + url;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('✓ Copied to clipboard');
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
